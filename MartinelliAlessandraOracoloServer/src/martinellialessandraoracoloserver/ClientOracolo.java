@@ -35,7 +35,7 @@ public class ClientOracolo implements Runnable {
                 out.println(risposta);
             }
         } catch (IOException e) {
-            System.out.println("Client disconnesso.");
+            System.out.println("Sei disconnesso.");
         }
         chiudiSocket();
     }
@@ -49,7 +49,7 @@ public class ClientOracolo implements Runnable {
     public String gestisciProtocollo(String messaggio) {
         //controllo per vedere se il messaggio e' vuoto
         if (messaggio == null || messaggio.isEmpty()) {
-            return "Il Comando e' vuoto.";
+            return "Nessun comando inserito.";
         }
 
         //divisione del messaggio in messaggio e parametro
@@ -57,20 +57,20 @@ public class ClientOracolo implements Runnable {
         String comando = messaggioDiviso[0];
        
         if(messaggioDiviso.length < 2 && !comando.equalsIgnoreCase("HELP")){
-            return "Inserisci un _ dopo un comando, poi inserisci i parametri";
+            return "Inserisci '_' dopo il comando prima dei parametri.";
         }
         //controllo protocollo
         if (comando.equalsIgnoreCase("HELP")) {
-            return "I comandi sono PERSONA_[nome personalita'] serve a cambiare personalita' dell'oracolo, DOMANDA_[testo domada] serve a fare una domanda all'oracolo, HELP serve a mostrare i comandi";
+            return "I comandi che si possono trovare sono: PERSONA_[nome personalita'] cambia la personalita' dell'oracolo, DOMANDA_[testo] fa una domanda all'oracolo, HELP mostra i comandi";
         } else if (comando.equalsIgnoreCase("PERSONA")) {
             if (!oracolo.setPersonalitaAttuale(messaggioDiviso[1])) {
-                return "Inserisci una personalita' esistente: SIBILLA, PITON o CAPPELLO";
+                return "Inserisci una personalita' tra: SIBILLA, PITON o CAPPELLO";
             } else {
-                return "Personalita' cambiata correttamente";
+                return "Personalita' cambiata";
             }
         } else if (comando.equalsIgnoreCase("DOMANDA")) {
             if (messaggioDiviso[1].isBlank()) {
-                return "Inserisci una domanda dopo il comando";
+                return "L'Oracolo richiede un quesito! Formula la tua domanda";
             }
             return oracolo.rispondi();
         } else {
