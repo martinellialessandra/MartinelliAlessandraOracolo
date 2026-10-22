@@ -28,7 +28,7 @@ public class ClientOracolo implements Runnable { //Posso lavorare su un thread s
                 //Legge i comandi inviati dal client via rete                                           //Spedisce le risposte del Server al client ("true" invio immediato) 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
             //MESSAGGIO DI BENVENUTO
-            //Appena il client si connette, il server invia un essaggio d'inizio dicendo la personalità di default (persona attiva attualemente)
+            //Appena il client si connette, il server invia un messaggio d'inizio dicendo la personalità di default (persona attiva attualemente)
             out.println("Ti sei collegato. Questa è la persona che incontrerai " + oracolo.getPersonalitaAttuale());
 
             String messaggioClient;

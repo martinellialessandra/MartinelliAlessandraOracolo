@@ -29,12 +29,13 @@ public class JFrameOracolo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        cmbxPersonaggio = new javax.swing.JComboBox<>();
+        lblScegliPersonaggio = new javax.swing.JLabel();
+        lblFaiLaTuaDomanda = new javax.swing.JLabel();
+        btnInvio = new javax.swing.JButton();
+        txtfRisposta = new javax.swing.JTextField();
+        txtfDomanda = new javax.swing.JTextField();
+        btnHelp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("frmBase"); // NOI18N
@@ -47,34 +48,37 @@ public class JFrameOracolo extends javax.swing.JFrame {
         jLabel1.setText("Oracolo di Hogwarts");
         jLabel1.setName("lblTitolo"); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(30, 41, 59));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("es. Come andrà l'interrogazione?");
-        jButton1.setActionCommand("btnDomanda");
+        cmbxPersonaggio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sibilla", "Piton", "Cappello", " " }));
+        cmbxPersonaggio.setName("cmbNome"); // NOI18N
+        cmbxPersonaggio.addActionListener(this::cmbxPersonaggioActionPerformed);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sibilla", "Piton", "Cappello", " " }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        lblScegliPersonaggio.setForeground(new java.awt.Color(135, 162, 243));
+        lblScegliPersonaggio.setText("1. Scegli il personaggio");
+        lblScegliPersonaggio.setName("lblScegliPersonaggio"); // NOI18N
 
-        jLabel2.setForeground(new java.awt.Color(135, 162, 243));
-        jLabel2.setText("1. Scegli il personaggio");
-        jLabel2.setName("lblScegliPersonaggio"); // NOI18N
+        lblFaiLaTuaDomanda.setForeground(new java.awt.Color(134, 161, 242));
+        lblFaiLaTuaDomanda.setText("2. Fai la tua domanda");
+        lblFaiLaTuaDomanda.setName("lblFai la tua domanda"); // NOI18N
 
-        jLabel3.setForeground(new java.awt.Color(134, 161, 242));
-        jLabel3.setText("2. Fai la tua domanda");
-        jLabel3.setName("lblFai la tua domanda"); // NOI18N
+        btnInvio.setBackground(new java.awt.Color(217, 119, 6));
+        btnInvio.setFont(new java.awt.Font("SimSun-ExtG", 0, 12)); // NOI18N
+        btnInvio.setForeground(new java.awt.Color(30, 41, 59));
+        btnInvio.setText("Invia domanda");
+        btnInvio.setName("btnInviaDomanda"); // NOI18N
 
-        jButton2.setBackground(new java.awt.Color(217, 119, 6));
-        jButton2.setFont(new java.awt.Font("SimSun-ExtG", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(30, 41, 59));
-        jButton2.setText("Invia domanda");
-        jButton2.setName("btnInviaDomanda"); // NOI18N
+        txtfRisposta.setBackground(new java.awt.Color(30, 41, 59));
+        txtfRisposta.setForeground(new java.awt.Color(255, 255, 255));
+        txtfRisposta.setText("Risposta...");
+        txtfRisposta.setToolTipText("");
+        txtfRisposta.setName("txfRisposta"); // NOI18N
+        txtfRisposta.addActionListener(this::txtfRispostaActionPerformed);
 
-        jTextField1.setBackground(new java.awt.Color(30, 41, 59));
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Risposta...");
-        jTextField1.setToolTipText("");
-        jTextField1.setName("txfRisposta"); // NOI18N
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtfDomanda.setText("es. Come andrà l'interrogazione?");
+
+        btnHelp.setBackground(new java.awt.Color(217, 119, 6));
+        btnHelp.setFont(new java.awt.Font("SimSun-ExtG", 0, 12)); // NOI18N
+        btnHelp.setText("Help");
+        btnHelp.setName("btnHelp"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,37 +87,42 @@ public class JFrameOracolo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
+                        .addGap(117, 117, 117)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1))))
+                            .addComponent(cmbxPersonaggio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblScegliPersonaggio, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFaiLaTuaDomanda, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtfRisposta)
+                            .addComponent(txtfDomanda, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnInvio, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHelp)))))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(lblScegliPersonaggio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbxPersonaggio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFaiLaTuaDomanda)
+                .addGap(5, 5, 5)
+                .addComponent(txtfDomanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInvio)
+                    .addComponent(btnHelp))
+                .addGap(18, 18, 18)
+                .addComponent(txtfRisposta, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -130,13 +139,14 @@ public class JFrameOracolo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtfRispostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfRispostaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtfRispostaActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbxPersonaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxPersonaggioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        
+    }//GEN-LAST:event_cmbxPersonaggioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,13 +174,14 @@ public class JFrameOracolo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnHelp;
+    private javax.swing.JButton btnInvio;
+    private javax.swing.JComboBox<String> cmbxPersonaggio;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblFaiLaTuaDomanda;
+    private javax.swing.JLabel lblScegliPersonaggio;
+    private javax.swing.JTextField txtfDomanda;
+    private javax.swing.JTextField txtfRisposta;
     // End of variables declaration//GEN-END:variables
 }
