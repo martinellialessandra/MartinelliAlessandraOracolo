@@ -57,13 +57,13 @@
                               <Component id="cmbxPersonaggio" max="32767" attributes="0"/>
                               <Component id="lblScegliPersonaggio" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                               <Component id="lblFaiLaTuaDomanda" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
-                              <Component id="txtfRisposta" max="32767" attributes="0"/>
                               <Component id="txtfDomanda" pref="351" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="btnInvio" min="-2" pref="268" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnHelp" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jScrollPane1" alignment="0" min="-2" pref="346" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -90,8 +90,8 @@
                       <Component id="btnHelp" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txtfRisposta" min="-2" pref="102" max="-2" attributes="0"/>
-                  <EmptySpace pref="58" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="106" max="-2" attributes="0"/>
+                  <EmptySpace pref="54" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -112,11 +112,10 @@
         <Component class="javax.swing.JComboBox" name="cmbxPersonaggio">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Sibilla"/>
-                <StringItem index="1" value="Piton"/>
-                <StringItem index="2" value="Cappello"/>
-                <StringItem index="3" value=" "/>
+              <StringArray count="3">
+                <StringItem index="0" value="SIBILLA"/>
+                <StringItem index="1" value="PITON"/>
+                <StringItem index="2" value="CAPPELLO"/>
               </StringArray>
             </Property>
             <Property name="name" type="java.lang.String" value="cmbNome" noResource="true"/>
@@ -160,21 +159,8 @@
             <Property name="text" type="java.lang.String" value="Invia domanda"/>
             <Property name="name" type="java.lang.String" value="btnInviaDomanda" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtfRisposta">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="3b" green="29" red="1e" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Risposta..."/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="name" type="java.lang.String" value="txfRisposta" noResource="true"/>
-          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfRispostaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInvioActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtfDomanda">
@@ -193,7 +179,26 @@
             <Property name="text" type="java.lang.String" value="Help"/>
             <Property name="name" type="java.lang.String" value="btnHelp" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHelpActionPerformed"/>
+          </Events>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="txaRisposta">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

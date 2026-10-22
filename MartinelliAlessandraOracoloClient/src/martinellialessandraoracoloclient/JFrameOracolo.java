@@ -1,3 +1,13 @@
+package martinellialessandraoracoloclient;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,12 +20,26 @@
 public class JFrameOracolo extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameOracolo.class.getName());
-
+    private final int porta = 12345;
+    private final String host = "localhost";
+    private Socket socket;
+    private BufferedReader input;
+    private PrintWriter output;
+    private Scanner tastiera;
     /**
      * Creates new form JFrameOracolo
      */
     public JFrameOracolo() {
         initComponents();
+        try {
+        this.socket = new Socket(host, porta);
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.output = new PrintWriter(socket.getOutputStream(), true);
+        this.tastiera = new Scanner(System.in); 
+         txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+        }
+       catch(IOException ioe) {   
+       }
     }
 
     /**
@@ -33,9 +57,10 @@ public class JFrameOracolo extends javax.swing.JFrame {
         lblScegliPersonaggio = new javax.swing.JLabel();
         lblFaiLaTuaDomanda = new javax.swing.JLabel();
         btnInvio = new javax.swing.JButton();
-        txtfRisposta = new javax.swing.JTextField();
         txtfDomanda = new javax.swing.JTextField();
         btnHelp = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaRisposta = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("frmBase"); // NOI18N
@@ -48,7 +73,7 @@ public class JFrameOracolo extends javax.swing.JFrame {
         jLabel1.setText("Oracolo di Hogwarts");
         jLabel1.setName("lblTitolo"); // NOI18N
 
-        cmbxPersonaggio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sibilla", "Piton", "Cappello", " " }));
+        cmbxPersonaggio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SIBILLA", "PITON", "CAPPELLO" }));
         cmbxPersonaggio.setName("cmbNome"); // NOI18N
         cmbxPersonaggio.addActionListener(this::cmbxPersonaggioActionPerformed);
 
@@ -65,13 +90,7 @@ public class JFrameOracolo extends javax.swing.JFrame {
         btnInvio.setForeground(new java.awt.Color(30, 41, 59));
         btnInvio.setText("Invia domanda");
         btnInvio.setName("btnInviaDomanda"); // NOI18N
-
-        txtfRisposta.setBackground(new java.awt.Color(30, 41, 59));
-        txtfRisposta.setForeground(new java.awt.Color(255, 255, 255));
-        txtfRisposta.setText("Risposta...");
-        txtfRisposta.setToolTipText("");
-        txtfRisposta.setName("txfRisposta"); // NOI18N
-        txtfRisposta.addActionListener(this::txtfRispostaActionPerformed);
+        btnInvio.addActionListener(this::btnInvioActionPerformed);
 
         txtfDomanda.setText("es. Come andrà l'interrogazione?");
 
@@ -79,6 +98,12 @@ public class JFrameOracolo extends javax.swing.JFrame {
         btnHelp.setFont(new java.awt.Font("SimSun-ExtG", 0, 12)); // NOI18N
         btnHelp.setText("Help");
         btnHelp.setName("btnHelp"); // NOI18N
+        btnHelp.addActionListener(this::btnHelpActionPerformed);
+
+        txaRisposta.setEditable(false);
+        txaRisposta.setColumns(20);
+        txaRisposta.setRows(5);
+        jScrollPane1.setViewportView(txaRisposta);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,12 +120,12 @@ public class JFrameOracolo extends javax.swing.JFrame {
                             .addComponent(cmbxPersonaggio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblScegliPersonaggio, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblFaiLaTuaDomanda, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtfRisposta)
                             .addComponent(txtfDomanda, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnInvio, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnHelp)))))
+                                .addComponent(btnHelp))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,8 +146,8 @@ public class JFrameOracolo extends javax.swing.JFrame {
                     .addComponent(btnInvio)
                     .addComponent(btnHelp))
                 .addGap(18, 18, 18)
-                .addComponent(txtfRisposta, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,14 +164,39 @@ public class JFrameOracolo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtfRispostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfRispostaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfRispostaActionPerformed
-
     private void cmbxPersonaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxPersonaggioActionPerformed
-        // TODO add your handling code here:
-        
+        try {
+            // TODO add your handling code here:
+            String messaggio = "PERSONA_" + cmbxPersonaggio.getSelectedItem();
+            output.println(messaggio);
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+        } catch (IOException ex) {
+            System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+            
     }//GEN-LAST:event_cmbxPersonaggioActionPerformed
+
+    private void btnInvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvioActionPerformed
+        try {
+            // TODO add your handling code here:
+            String messaggio = "DOMANDA_" + txtfDomanda.getText();
+            output.println(messaggio);
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+        } catch (IOException ex) {
+            System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btnInvioActionPerformed
+
+    private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
+        try {
+            // TODO add your handling code here:
+            String messaggio = "HELP";
+            output.println(messaggio);
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+        } catch (IOException ex) {
+            System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btnHelpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,9 +229,10 @@ public class JFrameOracolo extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbxPersonaggio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFaiLaTuaDomanda;
     private javax.swing.JLabel lblScegliPersonaggio;
+    private javax.swing.JTextArea txaRisposta;
     private javax.swing.JTextField txtfDomanda;
-    private javax.swing.JTextField txtfRisposta;
     // End of variables declaration//GEN-END:variables
 }
