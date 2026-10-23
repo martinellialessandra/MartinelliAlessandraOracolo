@@ -18,27 +18,35 @@ import java.util.Scanner;
  * @author martinelli.alessandr
  */
 public class JFrameOracolo extends javax.swing.JFrame {
-    
+    //Variabili per collegarmi, leggere e scrivere
+    // Logger di sistema per registrare eventuali errori
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameOracolo.class.getName());
-    private final int porta = 12345;
-    private final String host = "localhost";
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
-    private Scanner tastiera;
+    // Impostazioni per la connessione di rete al Server
+    private final int porta = 12345; // Numero di porta del server
+    private final String host = "localhost"; // Indirizzo IP (stesso computer)
+    // Variabili di rete e input/output
+    private Socket socket; //Canale di comunicazione con il server
+    private BufferedReader input; //LEGGE le risposte che vengono dal server
+    private PrintWriter output; //INVIA i comandi al server
+    private Scanner tastiera; // Lettore da console
     /**
      * Creates new form JFrameOracolo
      */
     public JFrameOracolo() {
+        //Inizializzo
+        //COSTRUTTORE
         initComponents();
         try {
-        this.socket = new Socket(host, porta);
-        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.output = new PrintWriter(socket.getOutputStream(), true);
-        this.tastiera = new Scanner(System.in); 
-         txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+        this.socket = new Socket(host, porta); //Apre la connessione con la rete (porta 12345)
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Prepara il canale per ricevere dati dal server
+        this.output = new PrintWriter(socket.getOutputStream(), true); // Prepara il canale per inviare dati al server
+        this.tastiera = new Scanner(System.in); // Inizializza lo scanner da console
+        //Messaggio di benvenuto
+         txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n"); // Legge il primo messaggio inviato dal server e lo mostra nell'area di testo
         }
+       
        catch(IOException ioe) {   
+            // Se il server non risponde, l'errore viene intercettato qui senza far crashare il programma
        }
     }
 
@@ -163,37 +171,40 @@ public class JFrameOracolo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // === 3. SELEZIONE DEL PERSONAGGIO
     private void cmbxPersonaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxPersonaggioActionPerformed
         try {
-            // TODO add your handling code here:
+            // Prende il nome del personaggio scelto e lo invia al Server (es. "PERSONA_SIBILLA")
             String messaggio = "PERSONA_" + cmbxPersonaggio.getSelectedItem();
-            output.println(messaggio);
-            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+            output.println(messaggio); // Invia la stringa al server
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n"); // Legge la risposta inviata dal server e la appende nella JTextArea
         } catch (IOException ex) {
+            // Registra l'eventuale errore 
             System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
             
     }//GEN-LAST:event_cmbxPersonaggioActionPerformed
-
+    // === 4. BOTTONE "INVIA DOMANDA" ===
     private void btnInvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvioActionPerformed
         try {
-            // TODO add your handling code here:
+            // Costruisce la stringa con la domanda inserita nella JTextField (es. "DOMANDA_Come andrà...")
             String messaggio = "DOMANDA_" + txtfDomanda.getText();
-            output.println(messaggio);
-            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+            output.println(messaggio); // Spedisce la domanda al server
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n"); // Attende la risposta dal server e la mostra nella JTextArea
         } catch (IOException ex) {
+            // Registra l'eventuale errore 
             System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_btnInvioActionPerformed
-
+    //---BOTTONE HELP
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         try {
-            // TODO add your handling code here:
+            // Imposta il messaggio "HELP"
             String messaggio = "HELP";
-            output.println(messaggio);
-            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n");
+            output.println(messaggio); // Invia la richiesta di guida al server
+            txaRisposta.append(cmbxPersonaggio.getSelectedItem() + ": " + input.readLine() + "\n"); // Legge la risposta del server e la scrive nella JTextArea
         } catch (IOException ex) {
+            // Registra l'eventuale errore 
             System.getLogger(JFrameOracolo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_btnHelpActionPerformed

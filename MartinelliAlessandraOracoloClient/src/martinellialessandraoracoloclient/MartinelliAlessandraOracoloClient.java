@@ -19,6 +19,7 @@ public class MartinelliAlessandraOracoloClient {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        //Ho spostato la parte client nel frame
     java.awt.EventQueue.invokeLater(() -> new JFrameOracolo().setVisible(true));
     
 }
